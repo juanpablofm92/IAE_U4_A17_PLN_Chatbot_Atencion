@@ -5,13 +5,14 @@ DIVISIÓN DE ESTUDIOS DE POSGRADO E INVESTIGACIÓN
 MAESTRÍA EN INTELIGENCIA ARTIFICIAL
 
 Materia: Inteligencia Artificial y su Ética
-Actividad 17: PLN - Chatbot de Atención al Cliente (Gradio & CLI App)
+Actividad 17: PLN - Chatbot de Atención al Cliente (Gradio, CLI & Demo)
 Alumno: Juan Pablo Figueroa Moran (Matrícula: M26040059)
 =============================================================================
 """
 
 import sys
 import json
+import time
 from datetime import datetime
 from nlu_engine import ChatbotNLU
 
@@ -22,6 +23,7 @@ if sys.platform == "win32":
         pass
 
 FEEDBACK_LOG = "satisfaccion_feedback.json"
+
 
 def registrar_satisfaccion(estrellas: int, comentario: str = "") -> str:
     registro = {
@@ -43,59 +45,38 @@ def registrar_satisfaccion(estrellas: int, comentario: str = "") -> str:
     return f"¡Gracias por tu valoración de {estrellas} estrellas! Tu retroalimentación nos ayuda a mejorar."
 
 
-def iniciar_interfaz_gradio(bot: ChatbotNLU):
-    try:
-        import gradio as gr
-    except ImportError:
-        print("[!] Gradio no está instalado. Ejecutando en modo consola interactiva...")
-        iniciar_modo_consola(bot)
-        return
+def ejecutar_demostracion_automatica(bot: ChatbotNLU):
+    """Ejecuta una simulación completa de atención al cliente sin bloquear la consola."""
+    print("=" * 75)
+    print("  TECNM / ITSU - CHATBOT NLU CON FILTROS ÉTICOS Y REGISTRO DE SATISFACCIÓN")
+    print("  DEMOSTRACIÓN DE ATENCIÓN AL CLIENTE Y CASOS LÍMITE (FALLBACK)")
+    print("=" * 75)
 
-    def responder(mensaje, historial):
-        if not mensaje:
-            return "", historial
-        tag, conf, respuesta = bot.clasificar_intencion(mensaje)
-        detalles = f"{respuesta}\n\n*(NLU Tag: `{tag}` | Confianza: `{conf*100:.1f}%`)*"
-        historial = historial or []
-        historial.append((mensaje, detalles))
-        return "", historial
+    consultas_prueba = [
+        "¿Dónde viene mi paquete con guía #84920?",
+        "Quiero devolver un producto que llegó defectuoso",
+        "¿Cuáles son los métodos de pago aceptados?",
+        "El acelerador cuántico orbital está descalibrado"  # Caso ambiguo para probar fallback
+    ]
 
-    with gr.Blocks(title="Chatbot de Atención al Cliente - TecNM / ITSU", theme=gr.themes.Soft()) as demo:
-        gr.Markdown(
-            """
-            # 🤖 Asistente Virtual de Atención al Cliente
-            ### Maestría en Inteligencia Artificial — Asignatura: Inteligencia Artificial y su Ética
-            **Alumno:** Juan Pablo Figueroa Moran (M26040059)
-            
-            *Motor NLU Híbrido: RegEx + Similitud Cosenoidal TF-IDF con umbral de fallback del 60%.*
-            """
-        )
-        
-        chatbot = gr.Chatbot(label="Historial de Conversación", height=420)
-        
-        with gr.Row():
-            txt_input = gr.Textbox(
-                show_label=False,
-                placeholder="Escribe tu consulta aquí (ej. '¿dónde está mi pedido?', 'facturación', 'métodos de pago')...",
-                scale=8
-            )
-            btn_enviar = gr.Button("Enviar", variant="primary", scale=2)
+    for q in consultas_prueba:
+        print(f"\nUsuario > {q}")
+        tag, conf, respuesta = bot.clasificar_intencion(q)
+        print(f"Chatbot > {respuesta}")
+        print(f"          [Intención: '{tag}' | Certidumbre NLU: {conf*100:.1f}%]")
 
-        txt_input.submit(responder, [txt_input, chatbot], [txt_input, chatbot])
-        btn_enviar.click(responder, [txt_input, chatbot], [txt_input, chatbot])
+    # Registro de satisfacción
+    msg_fb = registrar_satisfaccion(5, "Atención rápida y clara.")
+    print(f"\n[+] Encuesta de Satisfacción Automatizada: {msg_fb}")
 
-        gr.Markdown("---")
-        gr.Markdown("### ⭐ Evaluación de Calidad del Servicio")
-        with gr.Row():
-            slider_rating = gr.Slider(minimum=1, maximum=5, step=1, value=5, label="Satisfacción del Usuario (1 a 5 Estrellas)")
-            txt_comentario = gr.Textbox(placeholder="Comentarios adicionales opcionales...", label="Comentarios")
-            btn_evaluar = gr.Button("Registrar Calificación", variant="secondary")
-
-        lbl_resultado = gr.Label(label="Estado del Registro")
-        btn_evaluar.click(registrar_satisfaccion, [slider_rating, txt_comentario], [lbl_resultado])
-
-    print("[*] Iniciando servidor web de Gradio en http://127.0.0.1:7860 ...")
-    demo.launch(server_name="127.0.0.1", server_port=7860, share=False)
+    # Consideración ética
+    print("\n" + "=" * 75)
+    print("  CONSIDERACIONES ÉTICAS EN AGENTES CONVERSACIONALES")
+    print("=" * 75)
+    print("  1. Transparencia Algorítmica: El usuario siempre debe saber que interactúa con una IA.")
+    print("  2. Derecho de Transferencia: Si la certidumbre es < 60%, se ofrece un agente humano.")
+    print("  3. Privacidad: Los mensajes de chat no almacenan datos bancarios ni PII sensible.")
+    print("=" * 75)
 
 
 def iniciar_modo_consola(bot: ChatbotNLU):
@@ -127,12 +108,42 @@ def iniciar_modo_consola(bot: ChatbotNLU):
             break
 
 
+def iniciar_interfaz_gradio(bot: ChatbotNLU):
+    try:
+        import gradio as gr
+    except ImportError:
+        print("[*] Módulo 'gradio' no disponible. Ejecutando demostración interactiva en consola...")
+        ejecutar_demostracion_automatica(bot)
+        return
+
+    def responder(mensaje, historial):
+        if not mensaje:
+            return "", historial
+        tag, conf, respuesta = bot.clasificar_intencion(mensaje)
+        detalles = f"{respuesta}\n\n*(NLU Tag: `{tag}` | Confianza: `{conf*100:.1f}%`)*"
+        historial = historial or []
+        historial.append((mensaje, detalles))
+        return "", historial
+
+    with gr.Blocks(title="Chatbot de Atención al Cliente - TecNM/ITSU") as demo:
+        gr.Markdown("# 🤖 Asistente Virtual Inteligente con NLU\n### Maestría en IA - TecNM / ITSU")
+        chatbot = gr.Chatbot(label="Conversación")
+        msg = gr.Textbox(label="Tu consulta:", placeholder="Ej: ¿Dónde viene mi pedido?")
+        msg.submit(responder, [msg, chatbot], [msg, chatbot])
+
+    demo.launch(server_name="127.0.0.1", server_port=7860, share=False)
+
+
 def main():
     bot = ChatbotNLU()
     if "--cli" in sys.argv:
         iniciar_modo_consola(bot)
-    else:
+    elif "--gradio" in sys.argv:
         iniciar_interfaz_gradio(bot)
+    else:
+        # Modo por defecto: demostración completa con métricas
+        ejecutar_demostracion_automatica(bot)
+
 
 if __name__ == "__main__":
     main()
