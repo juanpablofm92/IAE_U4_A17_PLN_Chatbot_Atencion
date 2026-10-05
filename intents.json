@@ -1,0 +1,124 @@
+{
+  "intents": [
+    {
+      "tag": "saludo",
+      "patterns": [
+        "hola",
+        "buenos dias",
+        "buenas tardes",
+        "buenas noches",
+        "que tal",
+        "hay alguien ahi",
+        "hola bot"
+      ],
+      "responses": [
+        "¡Hola! Bienvenido a nuestro servicio de atención al cliente. ¿En qué puedo asistirte hoy?",
+        "¡Saludos! Es un gusto atenderte. Por favor indícame tu consulta o duda sobre nuestros servicios."
+      ]
+    },
+    {
+      "tag": "envios",
+      "patterns": [
+        "donde esta mi paquete",
+        "rastrear envio",
+        "tiempo de entrega",
+        "cuanto tarda en llegar mi pedido",
+        "costo de envio a domicilio",
+        "numero de guia de paqueteria",
+        "hacen envios nacionales e internacionales"
+      ],
+      "responses": [
+        "Los envíos nacionales estándar tardan de 2 a 4 días hábiles. Puedes rastrear tu guía ingresando tu número de seguimiento en nuestra sección de Envíos.",
+        "Trabajamos con FedEx, DHL y Estafeta. El tiempo estimado de entrega es de 48 a 72 horas hábiles a partir de la confirmación del pago."
+      ]
+    },
+    {
+      "tag": "devoluciones",
+      "patterns": [
+        "quiero devolver un producto",
+        "politica de devolucion y reembolso",
+        "como solicito un reembolso",
+        "el producto llego roto y quiero mi dinero",
+        "cambiar articulo por garantia",
+        "cuantos dias tengo para devolver"
+      ],
+      "responses": [
+        "Tienes hasta 30 días naturales posteriores a tu compra para solicitar una devolución sin costo. El producto debe contar con empaque original.",
+        "Para iniciar una devolución o reclamo por garantía, ingresa al menú 'Mis Pedidos', selecciona el artículo y pulsa 'Solicitar Devolución'."
+      ]
+    },
+    {
+      "tag": "soporte_tecnico",
+      "patterns": [
+        "mi equipo no enciende",
+        "tengo un problema tecnico",
+        "el software no funciona",
+        "falla en la configuracion del dispositivo",
+        "como actualizar el firmware",
+        "necesito ayuda tecnica con mi cuenta"
+      ],
+      "responses": [
+        "Para soporte técnico, te sugerimos reiniciar el equipo a valores de fábrica o verificar la última actualización de firmware. Si el problema persiste, podemos coordinar una revisión de servicio.",
+        "Nuestro equipo de ingenieros de soporte está disponible de 8:00 a 20:00 hrs. Puedes consultar la guía de solución de fallos en nuestro portal de soporte."
+      ]
+    },
+    {
+      "tag": "metodos_pago",
+      "patterns": [
+        "cuales son las formas de pago",
+        "aceptan tarjeta de credito o debito",
+        "puedo pagar con paypal o transferencia",
+        "tienen meses sin intereses",
+        "pago en oxxo o efectivo",
+        "es seguro pagar con tarjeta"
+      ],
+      "responses": [
+        "Aceptamos tarjetas Visa, MasterCard, American Express, PayPal, MercadoPago y transferencias SPEI. Además ofrecemos hasta 12 meses sin intereses en compras mayores a $2,000 MXN.",
+        "Todas nuestras transacciones cuentan con cifrado SSL de 256 bits y certificación PCI-DSS para tu absoluta seguridad financiera."
+      ]
+    },
+    {
+      "tag": "facturacion",
+      "patterns": [
+        "necesito mi factura electronica",
+        "como tramitar factura cfdi",
+        "descargar xml y pdf de mi compra",
+        "cambiar razon social o rfc",
+        "tiempo limite para facturar un ticket"
+      ],
+      "responses": [
+        "Puedes generar tu factura electrónica (CFDI 4.0) dentro del mismo mes de tu compra ingresando tu número de ticket y RFC en el portal de facturación.",
+        "Para descargar los archivos PDF y XML de tu factura, dirígete a la sección 'Facturación Express' con tu ticket de compra y datos fiscales."
+      ]
+    },
+    {
+      "tag": "horarios_sucursales",
+      "patterns": [
+        "cual es su horario de atencion",
+        "a que hora abren y cierran",
+        "estan abiertos los domingos o dias festivos",
+        "ubicacion de sus sucursales fisicas",
+        "direccion de la tienda mas cercana"
+      ],
+      "responses": [
+        "Nuestras sucursales físicas y módulos de atención operan de Lunes a Sábado de 09:00 a 20:00 hrs, y Domingos de 10:00 a 18:00 hrs.",
+        "El canal digital y asistente virtual atienden 24/7. Las oficinas centrales atienden de 9:00 a 18:00 de Lunes a Viernes."
+      ]
+    },
+    {
+      "tag": "contacto_humano",
+      "patterns": [
+        "quiero hablar con una persona",
+        "comunicame con un asesor humano",
+        "atencion de un agente real",
+        "hablar con un representante",
+        "no quiero hablar con un bot",
+        "numero de telefono de atencion al cliente"
+      ],
+      "responses": [
+        "Entendido. En este momento te estoy transfiriendo con un ejecutivo humano especializado. Tiempo de espera estimado: 2 minutos.",
+        "Puedes comunicarte directamente con nuestro centro de atención telefónica al 800-123-4567 de Lunes a Viernes de 8:00 a 19:00 hrs."
+      ]
+    }
+  ]
+}
